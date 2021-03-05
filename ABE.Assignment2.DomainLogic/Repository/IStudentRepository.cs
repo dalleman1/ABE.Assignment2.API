@@ -10,7 +10,7 @@ namespace ABE.Assignment2.DomainLogic.Repository
         List<Student> GetAllStudents();
         Student GetStudentById(int studentId);
 
-        List<Student> GetCoursesById(int studentId);
+        List<Course> GetCoursesById(int studentId);
 
     }
 }

@@ -5,10 +5,12 @@ using System.Text;
 
 namespace ABE.Assignment2.DomainLogic.Repository
 {
-    class IStudentRepository
+    public interface IStudentRepository
     {
-    
+        List<Student> GetAllStudents();
+        Student GetStudentById(int studentId);
 
+        List<Student> GetCoursesById(int studentId);
 
     }
 }

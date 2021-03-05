@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>ABE.Assignment2.DomainLogic</AssemblyName>
+    <RootNamespace>ABE.Assignment2.DomainLogic</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GraphQL" Version="3.3.2" />
+  </ItemGroup>
+
+</Project>

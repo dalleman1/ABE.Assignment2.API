@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>ABE.Assignment2.API</AssemblyName>
+    <RootNamespace>ABE.Assignment2.API</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GraphiQL" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

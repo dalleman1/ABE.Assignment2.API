@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace ABE.Assignment2.API
 {
-    [Route("teachers")]
+    [Route("[controller]")]
     [ApiController]
-    public class TeacherController : ControllerBase
+    public class TeacherController : Controller
     {
         private readonly ISchema _schema;
         private readonly IDocumentExecuter _executer;

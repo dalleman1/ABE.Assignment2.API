@@ -17,7 +17,7 @@ namespace ABE.Assignment2.DomainLogic.Querys
             int id = 0;
 
             Field<ListGraphType<TeacherType>>(
-                name: "teachers", resolve: context =>
+                name: "getAllTeachers", resolve: context =>
                 {
                     return _teacherService.GetAllTeachers();
                 });

@@ -10,6 +10,7 @@ namespace ABE.Assignment2.DomainLogic.Schemas
         public TeacherSchema(IServiceProvider provider) : base(provider)
         {
             Query = provider.GetRequiredService<TeacherQuery>();
+
         }
     }
 }

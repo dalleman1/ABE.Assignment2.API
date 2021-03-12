@@ -5,6 +5,7 @@ using ABE.Assignment2.DomainLogic.Schemas;
 using ABE.Assignment2.DomainLogic.Service;
 using ABE.Assignment2.DomainLogic.Types;
 using GraphiQl;
+using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
@@ -29,7 +30,7 @@ namespace ABE.Assignment2.API
         {
             //Repositories:
             services.AddScoped<ITeacherRepository, TeacherRepository>();
-
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             //Services:
             services.AddScoped<ITeacherService, TeacherService>();
 
@@ -60,13 +61,14 @@ namespace ABE.Assignment2.API
             }
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
-            app.UseGraphiQl("/teachers");
+            // app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
+            app.UseGraphiQl("/graphiql", "/teachers");
+            app.UseGraphQL<TeacherSchema>("/teachers");
 
-            app.UseEndpoints(endpoints =>
+            /*app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });*/
         }
     }
 }

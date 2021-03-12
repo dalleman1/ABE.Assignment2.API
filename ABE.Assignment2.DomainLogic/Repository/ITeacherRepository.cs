@@ -8,8 +8,7 @@ namespace ABE.Assignment2.DomainLogic.Repository
 {
     public interface ITeacherRepository
     {
-        List<Teacher> GetAllTeachers();
-        Teacher GetTeacherById(int id);
-        Course GetCourseByTeacher(int id);
+        Task<List<Teacher>> GetAllTeachers();
+        Task<Teacher> AddTeacherAsync(Teacher teacher);
     }
 }

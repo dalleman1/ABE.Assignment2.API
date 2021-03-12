@@ -1,4 +1,6 @@
-﻿using ABE.Assignment2.DomainLogic.Models;
+﻿using ABE.Assignment2.DomainLogic.Config;
+using ABE.Assignment2.DomainLogic.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,41 +11,24 @@ namespace ABE.Assignment2.DomainLogic.Repository
 {
     public class TeacherRepository : ITeacherRepository
     {
-        private readonly List<Teacher> _teachers = new List<Teacher>();
-        private readonly List<Course> _courses = new List<Course>();
-
-        public TeacherRepository()
+        private readonly GraphQLContext _context;
+        public TeacherRepository(GraphQLContext context)
         {
-            Course course1 = new Course
-            {
-                Id = 1,
-                Name = "ABE"
-            };
+            _context = context;
 
-            Teacher teacher1 = new Teacher
-            {
-                Id = 1,
-                FirstName = "Poul",
-                LastName = "Ejnar",
-                Course = course1
-            };
-
-            _teachers.Add(teacher1);
-            _courses.Add(course1);
         }
-        public List<Teacher> GetAllTeachers()
+        public async Task<List<Teacher>> GetAllTeachers()
         {
-            return _teachers;
+            return await _context.Set<Teacher>()
+                     .AsNoTracking()
+                     .ToListAsync();
         }
 
-        public Teacher GetTeacherById(int id)
+        public async Task<Teacher> AddTeacherAsync(Teacher teacher)
         {
-            return _teachers.Where(teacher => teacher.Id == id).FirstOrDefault<Teacher>();
-        }
-
-        public Course GetCourseByTeacher(int id)
-        {
-            return _courses.Where(course => course.Teacher.Id == id).FirstOrDefault<Course>();
+            _context.Add(teacher);
+            await _context.SaveChangesAsync();
+            return teacher;
         }
     }
 }

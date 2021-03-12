@@ -22,7 +22,7 @@ namespace ABE.Assignment2.DomainLogic.Repository
 
             };
 
-            Teacher teacher1 = new Teacher
+            /*Teacher teacher1 = new Teacher
             {
                 Id = 1,
                 FirstName ="Henrik",
@@ -35,11 +35,11 @@ namespace ABE.Assignment2.DomainLogic.Repository
                 FirstName = "Oskar",
                 LastName ="Vedel",
                 Courses = courses
-            };
+            };*/
 
-            students.Add(student1);
+            /*students.Add(student1);
             teacher = teacher1;
-            courses.Add(course1);
+            courses.Add(course1);*/
         }
 
         public List<Student> GetAllStudents()

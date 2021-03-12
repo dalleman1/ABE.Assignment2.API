@@ -16,8 +16,6 @@ namespace ABE.Assignment2.DomainLogic.Types
             ("First name of the Teacher");
             Field(_ => _.LastName).Description
             ("Last name of the Teacher");
-            Field(_ => _.Course).Description
-            ("The teacher's course");
         }
     }
 }

@@ -3,6 +3,7 @@ using ABE.Assignment2.DomainLogic.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ABE.Assignment2.DomainLogic.Service
 {
@@ -13,19 +14,15 @@ namespace ABE.Assignment2.DomainLogic.Service
         {
             _teacherRepository = teacherRepository;
         }
-        public List<Teacher> GetAllTeachers()
+
+        public async Task<Teacher> AddTeacherAsync(Teacher teacher)
         {
-            return _teacherRepository.GetAllTeachers();
+            return await _teacherRepository.AddTeacherAsync(teacher);
         }
 
-        public Course GetCourseByTeacher(int id)
+        public async Task<List<Teacher>> GetAllTeachers()
         {
-            return _teacherRepository.GetCourseByTeacher(id);
-        }
-
-        public Teacher GetTeacherById(int id)
-        {
-            return _teacherRepository.GetTeacherById(id);
+            return await _teacherRepository.GetAllTeachers();
         }
     }
 }

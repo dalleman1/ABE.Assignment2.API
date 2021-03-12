@@ -1,3 +1,4 @@
+using ABE.Assignment2.DomainLogic.Config;
 using ABE.Assignment2.DomainLogic.DTO_s;
 using ABE.Assignment2.DomainLogic.Querys;
 using ABE.Assignment2.DomainLogic.Repository;
@@ -12,6 +13,7 @@ using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -28,28 +30,31 @@ namespace ABE.Assignment2.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //Repositories:
             services.AddScoped<ITeacherRepository, TeacherRepository>();
-            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
-            //Services:
             services.AddScoped<ITeacherService, TeacherService>();
 
+            services.AddDbContext<GraphQLContext>
+                (options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=GraphQL;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             //Types:
             services.AddScoped<TeacherType>();
 
             //Queries:
             services.AddScoped<TeacherQuery>();
-
+            services.AddScoped<TeacherMutation>();
             //DTO's
             services.AddScoped<GraphQLQueryDTO>();
 
-            //Schemas
-            services.AddScoped<ISchema, TeacherSchema>();
+            services.AddScoped<TeacherSchema>();
             services.AddGraphQL()
                 .AddSystemTextJson()
                 .AddGraphTypes(typeof(TeacherSchema), ServiceLifetime.Scoped);
-            services.AddControllers();
+            //var sp = services.BuildServiceProvider();
 
+            //services.AddSingleton<ISchema>(new TeacherSchema(new FuncServiceProvider(type => sp.GetService(type))));
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,14 +66,13 @@ namespace ABE.Assignment2.API
             }
             app.UseHttpsRedirection();
             app.UseRouting();
-            // app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
-            app.UseGraphiQl("/graphiql", "/teachers");
-            app.UseGraphQL<TeacherSchema>("/teachers");
+            app.UseGraphQL<TeacherSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
-            /*app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });*/
+            });
         }
     }
 }

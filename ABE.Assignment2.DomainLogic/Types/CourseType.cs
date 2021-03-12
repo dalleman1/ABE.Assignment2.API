@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ABE.Assignment2.DomainLogic.Types
 {
-    public class CourseType : ObjectGraphType<Course>
+    /*public class CourseType : ObjectGraphType<Course>
     {
         public CourseType()
         {
@@ -19,5 +19,5 @@ namespace ABE.Assignment2.DomainLogic.Types
             Field(_ => _.Students).Description
             ("The students enrolled in the course");
         }
-    }
+    }*/
 }

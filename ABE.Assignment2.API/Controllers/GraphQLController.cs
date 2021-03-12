@@ -14,11 +14,11 @@ namespace ABE.Assignment2.API
 {
     [Route("[controller]")]
     [ApiController]
-    public class TeacherController : Controller
+    public class GraphQLController : Controller
     {
         private readonly ISchema _schema;
         private readonly IDocumentExecuter _executer;
-        public TeacherController(ISchema schema, IDocumentExecuter executer)
+        public GraphQLController(ISchema schema, IDocumentExecuter executer)
         {
             _schema = schema;
             _executer = executer;

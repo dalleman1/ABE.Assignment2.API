@@ -14,34 +14,12 @@ namespace ABE.Assignment2.DomainLogic.Querys
         public TeacherQuery(ITeacherService teacherService)
         {
             _teacherService = teacherService;
-            int id = 0;
 
             Field<ListGraphType<TeacherType>>(
                 name: "getAllTeachers", resolve: context =>
                 {
                     return _teacherService.GetAllTeachers();
                 });
-
-            Field<TeacherType>(
-                name: "teacher",
-                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context =>
-                {
-                    id = context.GetArgument<int>("id");
-                    return _teacherService.GetTeacherById(id);
-                }
-                );
-
-            Field<CourseType>(
-                name: "course",
-                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context =>
-                {
-                    id = context.GetArgument<int>("id");
-                    return _teacherService.GetCourseByTeacher(id);
-                }
-                );
-
         }
     }
 }

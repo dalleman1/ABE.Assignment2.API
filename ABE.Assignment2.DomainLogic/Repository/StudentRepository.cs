@@ -47,10 +47,10 @@ namespace ABE.Assignment2.DomainLogic.Repository
             return students;
         }
 
-        public List<Course> GetCoursesById(int studentId)
+        /*public List<Course> GetCoursesById(int studentId)
         {
             //return courses.Where(course => course.Students.Contains(Students.Id) == studentId).ToList<Course>();
-        }
+        }*/
 
         public Student GetStudentById(int studentId)
         {

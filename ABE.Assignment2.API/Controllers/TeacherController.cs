@@ -1,5 +1,6 @@
 ﻿using ABE.Assignment2.DomainLogic.DTO_s;
 using GraphQL;
+using GraphQL.NewtonsoftJson;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -27,13 +28,13 @@ namespace ABE.Assignment2.API
         public async Task<IActionResult> Post([FromBody]
         GraphQLQueryDTO query)
         {
-            //var inputs = query.Variables.ToInputs();
+            var inputs = query.Variables.ToInputs();
 
             var result = await _executer.ExecuteAsync(_ =>
             {
                 _.Schema = _schema;
                 _.Query = query.Query;
-                //_.Inputs = inputs;
+                _.Inputs = inputs;
 
             });
             if (result.Errors?.Count > 0)

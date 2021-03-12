@@ -5,6 +5,8 @@ using ABE.Assignment2.DomainLogic.Schemas;
 using ABE.Assignment2.DomainLogic.Service;
 using ABE.Assignment2.DomainLogic.Types;
 using GraphiQl;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,24 +28,27 @@ namespace ABE.Assignment2.API
         public void ConfigureServices(IServiceCollection services)
         {
             //Repositories:
-            services.AddSingleton<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             //Services:
-            services.AddSingleton<ITeacherService, TeacherService>();
+            services.AddScoped<ITeacherService, TeacherService>();
 
             //Types:
-            services.AddSingleton<TeacherType>();
+            services.AddScoped<TeacherType>();
 
             //Queries:
-            services.AddSingleton<TeacherQuery>();
+            services.AddScoped<TeacherQuery>();
 
             //DTO's
-            services.AddSingleton<GraphQLQueryDTO>();
+            services.AddScoped<GraphQLQueryDTO>();
 
             //Schemas
-            services.AddSingleton<ISchema, TeacherSchema>();
-
+            services.AddScoped<ISchema, TeacherSchema>();
+            services.AddGraphQL()
+                .AddSystemTextJson()
+                .AddGraphTypes(typeof(TeacherSchema), ServiceLifetime.Scoped);
             services.AddControllers();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,10 +58,15 @@ namespace ABE.Assignment2.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
             app.UseGraphiQl("/teachers");
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

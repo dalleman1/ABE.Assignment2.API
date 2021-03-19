@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -26,6 +27,12 @@ namespace ABE.Assignment2.API
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -33,9 +40,12 @@ namespace ABE.Assignment2.API
             services.AddScoped<ITeacherRepository, TeacherRepository>();
             services.AddScoped<ITeacherService, TeacherService>();
 
-            services.AddDbContext<GraphQLContext>
-                (options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=GraphQL;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+            //services.AddDbContext<GraphQLContext>
+            //    (options => options.UseSqlServer(Configuration.GetConnectionString("LocalHostString")));
 
+            services.AddDbContext<GraphQLContext>
+                (options => options.UseSqlServer(Configuration.GetConnectionString("DockerServer")));
+           
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             //Types:
             services.AddScoped<TeacherType>();

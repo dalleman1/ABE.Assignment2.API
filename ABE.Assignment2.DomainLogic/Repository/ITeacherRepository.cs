@@ -10,5 +10,9 @@ namespace ABE.Assignment2.DomainLogic.Repository
     {
         Task<List<Teacher>> GetAllTeachers();
         Task<Teacher> AddTeacherAsync(Teacher teacher);
+        Task<Teacher> UpdateAsync(Teacher CurrentTeacher, Teacher NewTeacher);
+        Task<bool> DeleteById(int Id);
+        Task<Teacher> GetById(int Id);
+        bool DeleteTeacher(Teacher teacher);
     }
 }

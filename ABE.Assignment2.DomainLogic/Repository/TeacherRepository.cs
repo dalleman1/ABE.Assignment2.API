@@ -30,5 +30,36 @@ namespace ABE.Assignment2.DomainLogic.Repository
             await _context.SaveChangesAsync();
             return teacher;
         }
+
+        public async Task<Teacher> GetById(int Id)
+        {
+            return await _context.FindAsync<Teacher>(Id);
+        }
+
+        public async Task<bool> DeleteById(int Id)
+        {
+            var teacher =  await _context.FindAsync<Teacher>(Id);
+
+            if (teacher != null)
+            {
+                _context.Remove(teacher);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            return false;
+        }
+
+        public async Task<Teacher> UpdateAsync(Teacher CurrentTeacher, Teacher NewTeacher)
+        {
+            CurrentTeacher.FirstName = NewTeacher.FirstName;
+            CurrentTeacher.LastName = NewTeacher.LastName;
+            await _context.SaveChangesAsync();
+            return NewTeacher;
+        }
+
+        public bool DeleteTeacher(Teacher teacher)
+        {
+            _context.Remove(teacher);
+            return _context.SaveChanges() > 0;
+        }
     }
 }
